@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f2f2f2;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img.logo {
+            height: 40px;
+            margin-right: 20px;
+        }
+
+        .navbar-item {
+            background-color: #d9d9d9;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .navbar-i
+        {
+            background-color: #ffc107;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-item:hover {
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+        .navbar-i{
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #d9d9d9;
+        }
+
+        .navbar-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding-right: 20px;
+        }
+
+        .search-container input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .search-container button {
+            background-color: #ffc107;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .content {
+            display: flex;
+            padding: 40px;
+        }
+
+        .text-content {
+            max-width: 60%;
+        }
+
+        .text-content h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .text-content a {
+            font-size: 24px;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .text-content p {
+            font-size: 16px;
+            color: gray;
+        }
+
+        .image-content img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .login-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .profile-info {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 2000;
+        }
+
+        .profile-info button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: auto; 
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-contact {
+    color: #555;
+}
+
+.footer-contact p {
+    margin: 0;
+}
+
+.footer p {
+    color: #777;
+    margin-top: 10px;
+}
+.news-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff; 
+    color: #040404;
+    font-family: Arial, sans-serif;
+}
+
+.news-section {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #d9d9dd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.news-section h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #3a3a3a;
+    padding-bottom: 5px;
+}
+
+.article {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.article img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.article-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.article-content h3 {
+    font-size: 14px;
+    margin: 0 0 5px;
+    color: #000000;
+}
+
+.article-content p {
+    font-size: 12px;
+    margin: 0;
+    color: #000000;
+}
+
+.article-content .time {
+    font-size: 11px;
+    margin-top: 5px;
+    color: #000000;
+}
+
+.picks-section h2 {
+    color: #000000; 
+}
+
+    </style>
+</head>
+<body onclick="hideProfileInfo()">
+
+    <div class="navbar">
+        <img src="https://westus21-mediap.svc.ms/transform/thumbnail?provider=spo&farmid=193408&inputFormat=png&cs=MDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDQ4MTcxMGE0fFNQTw&docid=https%3A%2F%2Fmy.microsoftpersonalcontent.com%2F_api%2Fv2.0%2Fdrives%2Fb!txOD1OKw506yvQ5GlT3XbUt172wxN5ZHnuenyAmtzBWmgl6R3UPiSKjT9Medus8d%2Fitems%2F01Y2A7JB6OF2GFQG2OARC2CZNTJOIWV2FI%3Ftempauth%3Dv1e.eyJzaXRlaWQiOiJkNDgzMTNiNy1iMGUyLTRlZTctYjJiZC0wZTQ2OTUzZGQ3NmQiLCJhcHBpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDA0ODE3MTBhNCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9teS5taWNyb3NvZnRwZXJzb25hbGNvbnRlbnQuY29tQDkxODgwNDBkLTZjNjctNGM1Yi1iMTEyLTM2YTMwNGI2NmRhZCIsImV4cCI6IjE3MzEzNDgwMDAifQ.F7A1dzYzCtSbAuxwqXX3QnfnYTlI1LJixJmHvpv-Npw2smMKAkjOGs1oncktVNRi47Wgl4FELeR98CmO1H0aSfW1ED1TP2vNdXVbSA30ImvNQipp89d9Ua76EA3FhiTNaHY2Rz3Uok-SEgkTuNvhQMPH5sGQHmXdzpxUYbR83hOQ9yu-myA9RVxUzRY-51YoIoCNmMgVTLJ2hUB8RkmDAx6h-hSnPV0ofmzK2CWXz9tThABajE5AhWOadTlie8qrB1mwZWkboAGaWXn07jOUiKnlGVfUfq0L3Rlup59JNi06iSVeLqkGXz5xn2u7czMVDI-6lgSdweF8zaqMLIFpst1rT6NC_NGwFKhbYAxgXui929XDmwh4ZH4fq4cqdY7C.dADDdFNr9elCh5R3I653Cp3Eou33M3wboxipIX6F1PA%26version%3DPublished&cb=63866933833&encodeFailures=1&width=1933&height=995&action=Access" alt="Logo" class="logo">
+        <a href="#" class="navbar-i">Home</a>
+        <a href="Highlights.html" class="navbar-item">Highlights </a>
+        <a href="Society.html" class="navbar-item">Society</a>
+        <a href="Environment.html" class="navbar-item">Environment</a>
+        <a href="Science.html" class="navbar-item">Science</a>
+        <a href="Films.html" class="navbar-item">Films</a>
+
+        <div class="navbar-item">Local News
+            <div class="dropdown-content">
+                <a href="Mumbai.html">Mumbai</a>
+                <a href="Delhi.html">Delhi</a>
+                <a href="Bangalore.html">Bangalore</a>
+                <a href="Hyd.html">Hyderabad</a>
+                <a href="chennai.html">Chennai</a>
+                <a href="Kolkata.html">Kolkata</a>
+                <a href="Pune.html">Pune</a>
+                <a href="Ahmedabad.html">Ahmedabad</a>
+                <a href="Jaipur.html">Jaipur</a>
+                <a href="Lucknow.html">Lucknow</a>
+            </div>
+        </div>
+        <div class="navbar-item">Others
+            <div class="dropdown-content">
+                <a href="Sports.html">Sports</a>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+            <span class="profile-icon" onclick="handleProfileIconClick(event)">👤</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="text-content">
+            <h2>Home</h2>
+            <a href="#">160 from Telangana died in Gulf over past year, process begins to compensate their families</a>
+            <p>The families of 17 migrant workers from Telangana, who died in Gulf countries over the past year of illnesses, accidents, etc, on Wednesday received cheques of Rs 5 lakh each from Chief Minister A Revanth Reddy.
+
+                The CM, who was in Rajanna Sircilla district’s Vemulawada to lay foundation stones for several development projects, met the families from the area.
+                
+                Since December 7 last year, when the Congress government came to power, 160 people from across Telangana have died while they were in Gulf countries such as UAE, Oman, Saudi Arabia, Iraq, and Bahrain to work. The highest number of deceased are from Nizamabad and Jagital districts, said Congress NRI cell convener Manda Bheem Reddy.
+                On September 9, the Telangana government issued an order for an ex gratia payment of Rs 5 lakh each for the 160 families who lost loved ones in the Gulf since December 7.
+
+                The state’s NRI department Wednesday issued orders to release an additional Rs 1 crore to the Rs 6.45 crore already released last month, to address the shortage of funds for the families.
+                Apart from setting up an advisory committee for Gulf workers’ welfare, the state government has also decided to provide admission to the children of the deceased in government residential schools on priority.
+                No other state in the country is giving this amount of financial assistance to workers who die in the Gulf. These families, having lost their earning members, are in dire need of assistance. The CM has said that the government will extend a helping hand to Gulf victims,’’ said Bheem Reddy.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://images.indianexpress.com/2024/11/reddy-2.jpg?w=640" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="news-container">
+        <div class="news-section">
+            <h2>Top Stories</h2>
+            <div class="article">
+                <img src="https://www.hindustantimes.com/ht-img/img/2024/11/20/550x309/PTI11-20-2024-000237A-0_1732095154419_1732095200530.jpg" alt="Story 1">
+                <div class="article-content">
+                    <a href="topstories.html">Assembly election: How accurate were Maharashtra, Jharkhand exit polls in 2019?</a>
+                   
+                    <span class="time">4 hours ago</span>
+                </div>
+            </div>
+            <div class="article">
+                <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202411/maharashtra-exit-polls-2024-202024333-16x9_0.png?VersionId=ddg236ibGIMJ_w3YpcQUhBm2TpOB8cj5&size=690:388" alt="Story 2">
+                <div class="article-content">
+                    <a href="topstories2.html">Exit Polls Live: Advantage BJP+ In Maharashtra, Jharkhand</a>
+                   
+                    <span class="time">35 minutes ago</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="news-section">
+            <h2>Local News</h2>
+            <div class="article">
+                <img src="https://th-i.thgim.com/public/incoming/ijc92h/article68888155.ece/alternates/LANDSCAPE_1200/A%20Revanth%20Reddy%2010.jpg" alt="Local News 1">
+                <div class="article-content">
+                    <a href="local1.html">CM Revanth Reddy inaugurates Kaloji Kalakshetram in Telangana’s cultural capital Hanamkonda</a>
+                 
+                    <span class="time">13 hours ago</span>
+                </div>
+            </div>
+            <div class="article">
+                <img src="https://static.toiimg.com/thumb/msid-115470566,imgsize-1290898,width-400,height-225,resizemode-72/115470566.jpg" alt="Local News 2">
+                <div class="article-content">
+                    <a href="local2.html">Robbers break into SBI, loot Rs 13 crore jewels in Warangal</a>
+                 
+                    <span class="time">10 hours ago</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="news-section picks-section">
+            <h2>Picks for You</h2>
+            <div class="article">
+                <img src="https://cdn.123telugu.com/content/wp-content/uploads/2024/11/RAPO22.jpg" alt="Pick 1">
+                <div class="article-content">
+                    <a href="picks.html">Ram's new movie with Mahesh Babu gets a launch date</a>
+                    
+                    <span class="time">18 hours ago</span>
+                </div>
+            </div>
+            <div class="article">
+                <img src="https://images.indianexpress.com/2024/08/Nagarjuna-with-Naga-Chaitanya-and-Sobhita-Dhulipala.jpg" alt="Pick 2">
+                <div class="article-content">
+                    <a href="picks2.html">Nagarjuna makes rare comment about Sobhita Dhulipala</h3>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Login</h2>
+            <input type="text" id="name" placeholder="Name">
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="address" placeholder="Address">
+            <input type="number" id="age" placeholder="Age">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-contact">
+            <p>Contact Us: contact@newswebsite.com | Phone: +1 234 567 890</p>
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; 2024 News Website. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <div class="profile-info" id="profileInfo"></div>
+
+    <script>
+        function toggleLogin() {
+            const loginContainer = document.getElementById('loginContainer');
+            loginContainer.style.display = loginContainer.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function login() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const age = document.getElementById('age').value;
+
+            if (name && email && address && age) {
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                localStorage.setItem('address', address);
+                localStorage.setItem('age', age);
+
+                toggleLogin();
+                showProfileInfo();
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function handleProfileIconClick(event) {
+            event.stopPropagation();
+            const name = localStorage.getItem('name');
+            if (name) {
+                showProfileInfo();
+            } else {
+                toggleLogin();
+            }
+        }
+
+        function showProfileInfo() {
+            const name = localStorage.getItem('name');
+            const email = localStorage.getItem('email');
+            const address = localStorage.getItem('address');
+            const age = localStorage.getItem('age');
+
+            if (name && email && address && age) {
+                const profileInfo = document.getElementById('profileInfo');
+                profileInfo.innerHTML = `
+                    <strong>Name:</strong> ${name}<br>
+                    <strong>Email:</strong> ${email}<br>
+                    <strong>Address:</strong> ${address}<br>
+                    <strong>Age:</strong> ${age}<br>
+                    <button onclick="logout()">Logout</button>
+                `;
+                profileInfo.style.display = 'block';
+            }
+        }
+
+        function hideProfileInfo() {
+            document.getElementById('profileInfo').style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.clear();
+            hideProfileInfo();
+        }
+
+        window.onload = function() {
+            const name = localStorage.getItem('name');
+            if (!name) {
+                toggleLogin();
+            }
+        };
+    </script>
+</body>
+</html>

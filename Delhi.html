@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f2f2f2;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img.logo {
+            height: 40px;
+            margin-right: 20px;
+        }
+
+        .navbar-item {
+            background-color: #d9d9d9;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-item:hover {
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #d9d9d9;
+        }
+
+        .navbar-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding-right: 20px;
+        }
+
+        .search-container input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .search-container button {
+            background-color: #ffc107;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .content {
+            display: flex;
+            padding: 40px;
+        }
+
+        .text-content {
+            max-width: 60%;
+        }
+
+        .text-content h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .text-content a {
+            font-size: 24px;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .text-content p {
+            font-size: 16px;
+            color: gray;
+        }
+
+        .image-content img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .login-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .profile-info {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 2000;
+        }
+
+        .profile-info button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-contact {
+    color: #555;
+}
+
+.footer-contact p {
+    margin: 0;
+}
+
+.footer p {
+    color: #777;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body onclick="hideProfileInfo()">
+
+    <div class="navbar">
+        <img src="https://westus21-mediap.svc.ms/transform/thumbnail?provider=spo&farmid=193408&inputFormat=png&cs=MDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDQ4MTcxMGE0fFNQTw&docid=https%3A%2F%2Fmy.microsoftpersonalcontent.com%2F_api%2Fv2.0%2Fdrives%2Fb!txOD1OKw506yvQ5GlT3XbUt172wxN5ZHnuenyAmtzBWmgl6R3UPiSKjT9Medus8d%2Fitems%2F01Y2A7JB6OF2GFQG2OARC2CZNTJOIWV2FI%3Ftempauth%3Dv1e.eyJzaXRlaWQiOiJkNDgzMTNiNy1iMGUyLTRlZTctYjJiZC0wZTQ2OTUzZGQ3NmQiLCJhcHBpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDA0ODE3MTBhNCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9teS5taWNyb3NvZnRwZXJzb25hbGNvbnRlbnQuY29tQDkxODgwNDBkLTZjNjctNGM1Yi1iMTEyLTM2YTMwNGI2NmRhZCIsImV4cCI6IjE3MzEzNDgwMDAifQ.F7A1dzYzCtSbAuxwqXX3QnfnYTlI1LJixJmHvpv-Npw2smMKAkjOGs1oncktVNRi47Wgl4FELeR98CmO1H0aSfW1ED1TP2vNdXVbSA30ImvNQipp89d9Ua76EA3FhiTNaHY2Rz3Uok-SEgkTuNvhQMPH5sGQHmXdzpxUYbR83hOQ9yu-myA9RVxUzRY-51YoIoCNmMgVTLJ2hUB8RkmDAx6h-hSnPV0ofmzK2CWXz9tThABajE5AhWOadTlie8qrB1mwZWkboAGaWXn07jOUiKnlGVfUfq0L3Rlup59JNi06iSVeLqkGXz5xn2u7czMVDI-6lgSdweF8zaqMLIFpst1rT6NC_NGwFKhbYAxgXui929XDmwh4ZH4fq4cqdY7C.dADDdFNr9elCh5R3I653Cp3Eou33M3wboxipIX6F1PA%26version%3DPublished&cb=63866933833&encodeFailures=1&width=1933&height=995&action=Access" alt="Logo" class="logo">
+        <a href="index.html" class="navbar-item">Home</a>
+        <a href="Highlights.html" class="navbar-item">Highlights </a>
+        <a href="Society.html" class="navbar-item">Society</a>
+        <a href="Environment.html" class="navbar-item">Environment</a>
+        <a href="Science.html" class="navbar-item">Science</a>
+        <a href="Films.html" class="navbar-item">Films</a>
+
+        <div class="navbar-item">Local News
+            <div class="dropdown-content">
+                <a href="Mumbai.html">Mumbai</a>
+                <a href="Delhi.html">Delhi</a>
+                <a href="Bangalore.html">Bangalore</a>
+                <a href="Hyd.html">Hyderabad</a>
+                <a href="chennai.html">Chennai</a>
+                <a href="Kolkata.html">Kolkata</a>
+                <a href="Pune.html">Pune</a>
+                <a href="Ahmedabad.html">Ahmedabad</a>
+                <a href="Jaipur.html">Jaipur</a>
+                <a href="Lucknow.html">Lucknow</a>
+            </div>
+        </div>
+        <div class="navbar-item">Others
+            <div class="dropdown-content">
+                <a href="Sports.html">Sports</a>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+            <span class="profile-icon" onclick="handleProfileIconClick(event)">👤</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="text-content">
+            <h2>Delhi</h2>
+            <a href="#">Nangloi gym owner, Rohini jeweller get extortion calls</a>
+            <p>A gym owner in Delhi’s Nangloi received an extortion call of Rs 2 crore allegedly in the name of gangster Deepak Boxer, the police said.
+                According to a complaint registered at the Nangloi police station, the complainant received the call on November 7 from an international number. The police are trying to verify the source of the call.
+                Meanwhile, a jeweller in Rohini was threatened with dire consequences over a call on the same day (November 7) if he did not pay an amount that was asked for. The call was allegedly made by the members of Kala Jathedi gang,
+                The jeweller received a similar threat call the day before (November 6), allegedly from the members of the same gang, demanding protection money, the police said.
+                These incidents are in line with the twin firings allegedly by Gogi gang in front of shops in Nangloi and Alipur on November 5 and that by Nandu Gang of Kapil Sangwan in Paschim Vihar on November 7.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://images.indianexpress.com/2024/10/extortion.jpg?w=640" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Capital brings together 4 Indian masters under a roof to celebrate their birth centenary</a>
+            <p>In a timeline of Indian art, the year 1924 is certain to find prominence. It marked the birth of four of India’s most recognised artists — KG Subramanyan in February, FN Souza in April, Ram Kumar in September and VS Gaitonde in November. Though divergent in their art practice, they shared the common aim of discovering an individual artistic idiom and contributing to the development of art in India. In their birth centenary year, they are now being celebrated together in an exhibition titled “The Four: Celebrating the Birth Centenary of Four Modern Indian Masters”.
+
+                Organised by Progressive Art Gallery in collaboration with The Raza Foundation at the Triveni Kala Sangam, the exhibition curated by Yashodhara Dalmia brings together works by the four modernists primarily from the gallery collection. “This exhibition is a humble tribute to their genius. While on the one hand it creates a dialogue between their works, it also celebrates their legacy, the subjects and themes they explored, their understanding of contemporary aspirations and their larger contributions to the development of art in India,” notes RN Singh, founder of Progressive Art Gallery.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://images.indianexpress.com/2024/11/Gaitonde.jpg?w=640" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Three juveniles open fire twice within 10 mins, one killed</a>
+            <p>A man was killed and another injured in two incidents of shooting carried out by three juveniles within a span of 10 minutes in separate areas of Northeast Delhi early Saturday. All three — in the 16-17 age group — have been apprehended, said police.
+
+                The deceased has been identified as Nadeem (24). The police said that around 1.30 am, three bike-borne assailants arrived at Kabir Nagar and fired at three men — Nadeem, Aman and Shanwaz — who were on a scooty. Nadeem and Shanwaz were hit and rushed to the GTB hospital. “While Nadeem was declared brought dead, Shanwaz, who was shot on his right leg, is recovering,” DCP (Northeast) Rakesh Pawaria said.
+                
+                Meanwhile, after the shooting, the assailants took Nadeem’s scooty and moved towards Kardampuri in nearby Jyoti Nagar.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://images.indianexpress.com/2024/11/gun-shot.jpg?w=640" alt="Highlights Image">
+        </div>
+    </div>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-contact">
+            <p>Contact Us: contact@newswebsite.com | Phone: +1 234 567 890</p>
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; 2024 News Website. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Login</h2>
+            <input type="text" id="name" placeholder="Name">
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="address" placeholder="Address">
+            <input type="number" id="age" placeholder="Age">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <div class="profile-info" id="profileInfo"></div>
+
+    <script>
+        function toggleLogin() {
+            const loginContainer = document.getElementById('loginContainer');
+            loginContainer.style.display = loginContainer.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function login() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const age = document.getElementById('age').value;
+
+            if (name && email && address && age) {
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                localStorage.setItem('address', address);
+                localStorage.setItem('age', age);
+
+                toggleLogin();
+                showProfileInfo();
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function handleProfileIconClick(event) {
+            event.stopPropagation();
+            const name = localStorage.getItem('name');
+            if (name) {
+                showProfileInfo();
+            } else {
+                toggleLogin();
+            }
+        }
+
+        function showProfileInfo() {
+            const name = localStorage.getItem('name');
+            const email = localStorage.getItem('email');
+            const address = localStorage.getItem('address');
+            const age = localStorage.getItem('age');
+
+            if (name && email && address && age) {
+                const profileInfo = document.getElementById('profileInfo');
+                profileInfo.innerHTML = `
+                    <strong>Name:</strong> ${name}<br>
+                    <strong>Email:</strong> ${email}<br>
+                    <strong>Address:</strong> ${address}<br>
+                    <strong>Age:</strong> ${age}<br>
+                    <button onclick="logout()">Logout</button>
+                `;
+                profileInfo.style.display = 'block';
+            }
+        }
+
+        function hideProfileInfo() {
+            document.getElementById('profileInfo').style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.clear();
+            hideProfileInfo();
+        }
+
+        window.onload = function() {
+            const name = localStorage.getItem('name');
+            if (!name) {
+                toggleLogin();
+            }
+        };
+    </script>
+</body>
+</html>
