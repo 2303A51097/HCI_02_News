@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f2f2f2;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img.logo {
+            height: 40px;
+            margin-right: 20px;
+        }
+
+        .navbar-item {
+            background-color: #d9d9d9;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .navbar-i
+        {
+            background-color: #ffc107;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-item:hover {
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+        .navbar-i{
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #d9d9d9;
+        }
+
+        .navbar-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding-right: 20px;
+        }
+
+        .search-container input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .search-container button {
+            background-color: #ffc107;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .content {
+            display: flex;
+            padding: 40px;
+        }
+
+        .text-content {
+            max-width: 60%;
+        }
+
+        .text-content h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .text-content a {
+            font-size: 24px;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .text-content p {
+            font-size: 16px;
+            color: gray;
+        }
+
+        .image-content img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .login-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .profile-info {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 2000;
+        }
+
+        .profile-info button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: auto; 
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-contact {
+    color: #555;
+}
+
+.footer-contact p {
+    margin: 0;
+}
+
+.footer p {
+    color: #777;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body onclick="hideProfileInfo()">
+
+    <div class="navbar">
+        <img src="https://westus21-mediap.svc.ms/transform/thumbnail?provider=spo&farmid=193408&inputFormat=png&cs=MDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDQ4MTcxMGE0fFNQTw&docid=https%3A%2F%2Fmy.microsoftpersonalcontent.com%2F_api%2Fv2.0%2Fdrives%2Fb!txOD1OKw506yvQ5GlT3XbUt172wxN5ZHnuenyAmtzBWmgl6R3UPiSKjT9Medus8d%2Fitems%2F01Y2A7JB6OF2GFQG2OARC2CZNTJOIWV2FI%3Ftempauth%3Dv1e.eyJzaXRlaWQiOiJkNDgzMTNiNy1iMGUyLTRlZTctYjJiZC0wZTQ2OTUzZGQ3NmQiLCJhcHBpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDA0ODE3MTBhNCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9teS5taWNyb3NvZnRwZXJzb25hbGNvbnRlbnQuY29tQDkxODgwNDBkLTZjNjctNGM1Yi1iMTEyLTM2YTMwNGI2NmRhZCIsImV4cCI6IjE3MzEzNDgwMDAifQ.F7A1dzYzCtSbAuxwqXX3QnfnYTlI1LJixJmHvpv-Npw2smMKAkjOGs1oncktVNRi47Wgl4FELeR98CmO1H0aSfW1ED1TP2vNdXVbSA30ImvNQipp89d9Ua76EA3FhiTNaHY2Rz3Uok-SEgkTuNvhQMPH5sGQHmXdzpxUYbR83hOQ9yu-myA9RVxUzRY-51YoIoCNmMgVTLJ2hUB8RkmDAx6h-hSnPV0ofmzK2CWXz9tThABajE5AhWOadTlie8qrB1mwZWkboAGaWXn07jOUiKnlGVfUfq0L3Rlup59JNi06iSVeLqkGXz5xn2u7czMVDI-6lgSdweF8zaqMLIFpst1rT6NC_NGwFKhbYAxgXui929XDmwh4ZH4fq4cqdY7C.dADDdFNr9elCh5R3I653Cp3Eou33M3wboxipIX6F1PA%26version%3DPublished&cb=63866933833&encodeFailures=1&width=1933&height=995&action=Access" alt="Logo" class="logo">
+        <a href="#" class="navbar-i">Home</a>
+        <a href="Highlights.html" class="navbar-item">Highlights </a>
+        <a href="Society.html" class="navbar-item">Society</a>
+        <a href="Environment.html" class="navbar-item">Environment</a>
+        <a href="Science.html" class="navbar-item">Science</a>
+        <a href="Films.html" class="navbar-item">Films</a>
+
+        <div class="navbar-item">Local News
+            <div class="dropdown-content">
+                <a href="Mumbai.html">Mumbai</a>
+                <a href="Delhi.html">Delhi</a>
+                <a href="Bangalore.html">Bangalore</a>
+                <a href="Hyd.html">Hyderabad</a>
+                <a href="chennai.html">Chennai</a>
+                <a href="Kolkata.html">Kolkata</a>
+                <a href="Pune.html">Pune</a>
+                <a href="Ahmedabad.html">Ahmedabad</a>
+                <a href="Jaipur.html">Jaipur</a>
+                <a href="Lucknow.html">Lucknow</a>
+            </div>
+        </div>
+        <div class="navbar-item">Others
+            <div class="dropdown-content">
+                <a href="Sports.html">Sports</a>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+            <span class="profile-icon" onclick="handleProfileIconClick(event)">👤</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="text-content">
+            <h2>Home</h2>
+            <a href="#">Declining Standards in Higher Education in India</a>
+            <p>Indian higher education was once renowned for its intellectual rigor and contributions to knowledge...</p>
+        </div>
+        <div class="image-content">
+            <img src="https://via.placeholder.com/400x300" alt="Highlights Image">
+        </div>
+    </div>
+
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Login</h2>
+            <input type="text" id="name" placeholder="Name">
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="address" placeholder="Address">
+            <input type="number" id="age" placeholder="Age">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-contact">
+            <p>Contact Us: contact@newswebsite.com | Phone: +1 234 567 890</p>
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; 2024 News Website. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <div class="profile-info" id="profileInfo"></div>
+
+    <script>
+        function toggleLogin() {
+            const loginContainer = document.getElementById('loginContainer');
+            loginContainer.style.display = loginContainer.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function login() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const age = document.getElementById('age').value;
+
+            if (name && email && address && age) {
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                localStorage.setItem('address', address);
+                localStorage.setItem('age', age);
+
+                toggleLogin();
+                showProfileInfo();
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function handleProfileIconClick(event) {
+            event.stopPropagation();
+            const name = localStorage.getItem('name');
+            if (name) {
+                showProfileInfo();
+            } else {
+                toggleLogin();
+            }
+        }
+
+        function showProfileInfo() {
+            const name = localStorage.getItem('name');
+            const email = localStorage.getItem('email');
+            const address = localStorage.getItem('address');
+            const age = localStorage.getItem('age');
+
+            if (name && email && address && age) {
+                const profileInfo = document.getElementById('profileInfo');
+                profileInfo.innerHTML = `
+                    <strong>Name:</strong> ${name}<br>
+                    <strong>Email:</strong> ${email}<br>
+                    <strong>Address:</strong> ${address}<br>
+                    <strong>Age:</strong> ${age}<br>
+                    <button onclick="logout()">Logout</button>
+                `;
+                profileInfo.style.display = 'block';
+            }
+        }
+
+        function hideProfileInfo() {
+            document.getElementById('profileInfo').style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.clear();
+            hideProfileInfo();
+        }
+
+        window.onload = function() {
+            const name = localStorage.getItem('name');
+            if (!name) {
+                toggleLogin();
+            }
+        };
+    </script>
+</body>
+</html>

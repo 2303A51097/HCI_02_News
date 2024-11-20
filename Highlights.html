@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #f2f2f2;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img.logo {
+            height: 40px;
+            margin-right: 20px;
+        }
+
+        .navbar-item {
+            background-color: #d9d9d9;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .navbar-i
+        {
+            background-color: #ffc107;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .navbar-i
+        {
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+
+        .navbar-item:hover {
+            background-color: #ffc107;
+            transform: translateY(-5px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            padding: 10px 16px;
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #d9d9d9;
+        }
+
+        .navbar-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding-right: 20px;
+        }
+
+        .search-container input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .search-container button {
+            background-color: #ffc107;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .content {
+            display: flex;
+            padding: 40px;
+        }
+
+        .text-content {
+            max-width: 60%;
+        }
+
+        .text-content h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .text-content a {
+            font-size: 24px;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .text-content p {
+            font-size: 16px;
+            color: gray;
+        }
+
+        .image-content img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .login-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .profile-info {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 2000;
+        }
+
+        .profile-info button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: auto; 
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-contact {
+    color: #555;
+}
+
+.footer-contact p {
+    margin: 0;
+}
+
+.footer p {
+    color: #777;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body onclick="hideProfileInfo()">
+
+    <div class="navbar">
+        <img src="https://westus21-mediap.svc.ms/transform/thumbnail?provider=spo&farmid=193408&inputFormat=png&cs=MDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDQ4MTcxMGE0fFNQTw&docid=https%3A%2F%2Fmy.microsoftpersonalcontent.com%2F_api%2Fv2.0%2Fdrives%2Fb!txOD1OKw506yvQ5GlT3XbUt172wxN5ZHnuenyAmtzBWmgl6R3UPiSKjT9Medus8d%2Fitems%2F01Y2A7JB6OF2GFQG2OARC2CZNTJOIWV2FI%3Ftempauth%3Dv1e.eyJzaXRlaWQiOiJkNDgzMTNiNy1iMGUyLTRlZTctYjJiZC0wZTQ2OTUzZGQ3NmQiLCJhcHBpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDA0ODE3MTBhNCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9teS5taWNyb3NvZnRwZXJzb25hbGNvbnRlbnQuY29tQDkxODgwNDBkLTZjNjctNGM1Yi1iMTEyLTM2YTMwNGI2NmRhZCIsImV4cCI6IjE3MzEzNDgwMDAifQ.F7A1dzYzCtSbAuxwqXX3QnfnYTlI1LJixJmHvpv-Npw2smMKAkjOGs1oncktVNRi47Wgl4FELeR98CmO1H0aSfW1ED1TP2vNdXVbSA30ImvNQipp89d9Ua76EA3FhiTNaHY2Rz3Uok-SEgkTuNvhQMPH5sGQHmXdzpxUYbR83hOQ9yu-myA9RVxUzRY-51YoIoCNmMgVTLJ2hUB8RkmDAx6h-hSnPV0ofmzK2CWXz9tThABajE5AhWOadTlie8qrB1mwZWkboAGaWXn07jOUiKnlGVfUfq0L3Rlup59JNi06iSVeLqkGXz5xn2u7czMVDI-6lgSdweF8zaqMLIFpst1rT6NC_NGwFKhbYAxgXui929XDmwh4ZH4fq4cqdY7C.dADDdFNr9elCh5R3I653Cp3Eou33M3wboxipIX6F1PA%26version%3DPublished&cb=63866933833&encodeFailures=1&width=1933&height=995&action=Access" alt="Logo" class="logo">
+        <a href="index.html" class="navbar-item">Home</a>
+        <a href="Highlights.html" class="navbar-i">Highlights</a>
+        <a href="Society.html" class="navbar-item">Society</a>
+        <a href="Environment.html" class="navbar-item">Environment</a>
+        <a href="Science.html" class="navbar-item">Science</a>
+        <a href="Films.html" class="navbar-item">Films</a>
+
+        <div class="navbar-item">Local News
+            <div class="dropdown-content">
+                <a href="Mumbai.html">Mumbai</a>
+                <a href="Delhi.html">Delhi</a>
+                <a href="Bangalore.html">Bangalore</a>
+                <a href="Hyd.html">Hyderabad</a>
+                <a href="chennai.html">Chennai</a>
+                <a href="Kolkata.html">Kolkata</a>
+                <a href="Pune.html">Pune</a>
+                <a href="Ahmedabad.html">Ahmedabad</a>
+                <a href="Jaipur.html">Jaipur</a>
+                <a href="Lucknow.html">Lucknow</a>
+            </div>
+        </div>
+        <div class="navbar-item">Others
+            <div class="dropdown-content">
+                <a href="Sports.html">Sports</a>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button>🔍</button>
+            <span class="profile-icon" onclick="handleProfileIconClick(event)">👤</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="text-content">
+            <h2>Highlights</h2>
+            <a href="#">India vs New Zealand Highlights, 3rd Test Day 2: Ashwin, Jadeja reduce NZ to 171/9 at Stumps</a>
+            <p>IND vs NZ, 3rd Test Day 2: Check all the highlights from Day 2 of the 3rd Test match between India and New Zealand being played at the Wankhede Stadium in Mumbai.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://ss-i.thgim.com/public/incoming/lk1cqd/article68819491.ece/alternates/LANDSCAPE_1200/Blog%20Card%201.png" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Visit the majestic Taj Mahal at sunrise or sunset</a>
+            <p>The story of the Taj Mahal, built by emperor Shah Jahan as a tomb for his favourite wife, is a romantic one and there is no more romantic time or light in which to see this monument of love than at sunrise or sunset. Arrive before or after the bulk of the day’s crowds, and see the Taj as it changes colour with the sun.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2019%2007%20july/shutterstock_1084257542.jpg?ext=.jpg&width=620&format=webp&quality=80&v=201906241127" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Spend a night on a house boat</a>
+            <p>You may think of India as a loud and busy destination, but there is another side to this diverse country. Stay overnight on a Keralan houseboat for a relaxed introduction to life on the backwaters. See paddy fields, village life and a myriad of birdlife from a traditional thatched houseboat as you slow down to the relaxed pace of southern India.
+            </p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2019%2007%20july/houseboat-hayley-garner-kerala-kb-blog.jpg?ext=.jpg&width=620&format=webp&quality=80&v=201906241606" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Go on a safari in search of tigers</a>
+            <p>There's some incredible wildlife to be seen in India, including the majestic Bengal tiger. Our Highlights of Northern India tour visits Ranthambore, one of the best national parks to see tigers, as well as other animals like Indian elephants, striped hyenas, sloth bears and a myriad of bird species like crested hawk eagles, crested serpent eagles and white-breasted kingfishers.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2019%2007%20july/shutterstock_160672727-blog.jpg?ext=.jpg&width=620&format=webp&quality=80&v=201906241603" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Feast on delicious Indian food</a>
+            <p>Much of the best food in India is found outside of the city’s hotels and restaurants. Head to the streets of Mumbai to try delicious pav bhajis, a popular vegetable curry served with a bread roll. Or enjoy fresh parathas (Indian flatbreads) in Delhi’s Chandi Chowk.
+
+                When it comes to cuisine, you'll try different Indian curries depending on the region you’re visiting. Biryani in Hyderabad; hot meat curries in Rajasthan or thukpa (a noodle soup) in Ladakh. In southern India, mildly-spiced vegetarian and fish curries come fresh and wrapped in banana leaves.
+                
+                For a trip with a focus on the region's cuisine, with cookery demonstrations, street food tours and visits to spice gardens, check out our Indian Food Adventure.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2022%2012%20december/68892.jpg?ext=.jpg&width=620&format=webp&quality=80&v=202212061022" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Visit a festival</a>
+            <p>India's busy calendar of events and festivals means that you’ll find colour and celebration whenever you visit. On the edge of the Thar Desert the Pushkar camel fair sees hundreds of thousands of people gather every November to trade camels, cattle and horses.
+ 
+
+                Or spend two full days at the Hornbill Festival in Nagaland. Tribes come together to perform traditional dances and folk songs, wearing ornate clothing and jewellery. They wear head dresses that reflect the colourful feathers of the hornbill, the state bird that the tribes admire for the grandeur of its plumage.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2019%2007%20july/shutterstock_783725833-blog.jpg?ext=.jpg&width=620&format=webp&quality=80&v=201906241357" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Go on a train ride</a>
+            <p>Rail journeys are synonymous with travel in India, and the country is world-renowned for the scale and efficiency of its rail operations. Tour the highlights of North India travelling by train on our Kolkata to Amritsar trip , or see the Himalayan Foothills from the window of the Toy Train.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2019%2007%20july/shutterstock_184285343.jpg?ext=.jpg&width=620&format=webp&quality=80&v=201906241359" alt="Highlights Image">
+        </div>
+    </div>
+    <div class="content">
+        <div class="text-content">
+            <h2></h2>
+            <a href="#">Relax by the coast</a>
+            <p>While not known for its beaches, India has plenty to offer – particularly on its west coast. The best beaches in India include the palm-fringed sandy beaches of Goa and the crescents of Kovalam. Alternatively, why not add an extension to your India trip and explore the sandy stretches of Sri Lanka or the Maldives?</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.explore.co.uk/medialibraries/explore/blog-images/2019%2007%20july/shutterstock_777801208.jpg?ext=.jpg&width=620&format=webp&quality=80&v=201906241411" alt="Highlights Image">
+        </div>
+    </div>
+
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Login</h2>
+            <input type="text" id="name" placeholder="Name">
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="address" placeholder="Address">
+            <input type="number" id="age" placeholder="Age">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-contact">
+            <p>Contact Us: contact@newswebsite.com | Phone: +1 234 567 890</p>
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; 2024 News Website. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <div class="profile-info" id="profileInfo"></div>
+
+    <script>
+        function toggleLogin() {
+            const loginContainer = document.getElementById('loginContainer');
+            loginContainer.style.display = loginContainer.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function login() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const age = document.getElementById('age').value;
+
+            if (name && email && address && age) {
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                localStorage.setItem('address', address);
+                localStorage.setItem('age', age);
+
+                toggleLogin();
+                showProfileInfo();
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function handleProfileIconClick(event) {
+            event.stopPropagation();
+            const name = localStorage.getItem('name');
+            if (name) {
+                showProfileInfo();
+            } else {
+                toggleLogin();
+            }
+        }
+
+        function showProfileInfo() {
+            const name = localStorage.getItem('name');
+            const email = localStorage.getItem('email');
+            const address = localStorage.getItem('address');
+            const age = localStorage.getItem('age');
+
+            if (name && email && address && age) {
+                const profileInfo = document.getElementById('profileInfo');
+                profileInfo.innerHTML = `
+                    <strong>Name:</strong> ${name}<br>
+                    <strong>Email:</strong> ${email}<br>
+                    <strong>Address:</strong> ${address}<br>
+                    <strong>Age:</strong> ${age}<br>
+                    <button onclick="logout()">Logout</button>
+                `;
+                profileInfo.style.display = 'block';
+            }
+        }
+
+        function hideProfileInfo() {
+            document.getElementById('profileInfo').style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.clear();
+            hideProfileInfo();
+        }
+
+        window.onload = function() {
+            const name = localStorage.getItem('name');
+            if (!name) {
+                toggleLogin();
+            }
+        };
+    </script>
+</body>
+</html>
